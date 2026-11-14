@@ -1,0 +1,336 @@
+{
+  "school": {
+    "name": "屏東縣復興國小",
+    "parkName": "復興夢想主題遊樂園",
+    "subtitle": "116 學年度小一新生報到與校園導覽",
+    "address": "屏東縣屏東市復興路 376 號",
+    "phone": "08-7525402 轉 12（教務處）",
+    "website": "https://www.fsps.ptc.edu.tw/",
+    "admissionSite": "https://sites.google.com/fsps.ptc.edu.tw/fspsfreshman-admission",
+    "resources": [
+      { "icon": "🏫", "label": "復興 3D 校園導覽", "desc": "真實校園建築的 3D 導覽", "url": "https://buddhaists.github.io/fuxing-3d-campus/", "facility": "ferris" },
+      { "icon": "🐉", "label": "福星龍社團浮空島", "desc": "認識學校的各個社團", "url": "https://buddhaists.github.io/fuxing-clubs-island/", "facility": "clubs" },
+      { "icon": "🏝️", "label": "復興文藝復興（校刊）浮空島", "desc": "線上翻閱校刊與孩子們的作品", "url": "https://buddhaists.github.io/fushing-island/", "facility": "magazine" }
+    ],
+    "notice": "本站日期與流程參考招生專區（115 學年度資料），116 學年度實際日期請以學校公告為準。校內建築與處室位置為示意配置。"
+  },
+
+  "registration": {
+    "title": "新生報到方式",
+    "intro": "已到校完成報到的新生，不用再填線上表單。無法於期限內前來者，可提早到教務處辦理。",
+    "methods": [
+      {
+        "id": "online",
+        "icon": "💻",
+        "name": "方式一：線上報到＋郵寄資料",
+        "steps": [
+          "掃描校網布告欄 QR code，或開啟線上報到表單填寫資料。",
+          "將「新生入學通知單」與「戶籍謄本正本」郵寄至：屏東縣屏東市復興路 376 號 教務處。",
+          "教務處研發組會再與家長聯繫確認。"
+        ],
+        "deadline": "郵寄截止日：以學校公告為準（115 學年度為 5 月 2 日前）",
+        "link": { "label": "線上報到表單（開放時間依公告）", "url": "https://forms.gle/cHYA2nM2mhJbbnQ1A" }
+      },
+      {
+        "id": "onsite",
+        "icon": "🏫",
+        "name": "方式二：到校親自報到",
+        "steps": [
+          "攜帶「新生入學通知單」與「戶口名簿」。",
+          "家長或小朋友皆可前往學校教務處辦理。",
+          "辦理時間：每日上午 8:00–12:00、下午 1:30–4:00。"
+        ],
+        "deadline": "報到期限：以學校公告為準（115 學年度為 5 月 8 日前）"
+      }
+    ],
+    "eligibility": "設籍屏東市、年滿 6 足歲之學齡兒童（出生日期區間依當年度公告）。"
+  },
+
+  "facilities": [
+    {
+      "id": "gate",
+      "type": "ticket",
+      "icon": "🎟️",
+      "name": "入口售票亭",
+      "campus": "校門口・新生報到服務台",
+      "pos": [0, 23],
+      "node": "gate",
+      "color": "#e8775a",
+      "desc": "歡迎光臨！入園門票就是一份親子「適性小問答」，完成後會推薦你最先去逛的設施。這裡也是新生報到資訊的起點。",
+      "details": [
+        "完成適性小問答，取得專屬門票",
+        "查看兩種新生報到方式",
+        "學校地址：屏東縣屏東市復興路 376 號"
+      ],
+      "actions": ["quiz", "registration"],
+      "a11y": "校門口為平面出入口，輪椅與娃娃車可直接進出。"
+    },
+    {
+      "id": "academic",
+      "type": "castle",
+      "icon": "🏰",
+      "name": "夢想城堡服務中心",
+      "campus": "教務處（新生報到窗口）",
+      "pos": [0, -14],
+      "node": "castle",
+      "color": "#f2c46d",
+      "desc": "城堡就是全園的總服務中心——教務處。新生報到、註冊、編班與課程問題都在這裡辦理。",
+      "details": [
+        "到校親自報到地點",
+        "研發組：線上報到後續聯繫",
+        "諮詢電話：08-7525402 轉 12",
+        "辦理時間：8:00–12:00、13:30–16:00"
+      ],
+      "actions": ["registration"],
+      "a11y": "城堡正面為階梯；右側有無障礙坡道可直達入口。"
+    },
+    {
+      "id": "student",
+      "type": "kiosk",
+      "icon": "🎈",
+      "name": "氣球遊客服務站",
+      "campus": "學務處（示意）",
+      "pos": [-11, -10],
+      "node": "sa",
+      "color": "#7fb6e6",
+      "desc": "負責生活常規、校園安全、上下學交通導護與各項活動。孩子遺失物品也可以來這裡詢問。",
+      "details": ["上下學交通與導護", "校園安全與生活教育", "失物招領"],
+      "a11y": "平面入口，無階梯。"
+    },
+    {
+      "id": "general",
+      "type": "kiosk",
+      "icon": "🔧",
+      "name": "工具熊維修站",
+      "campus": "總務處（示意）",
+      "pos": [11, -10],
+      "node": "ga",
+      "color": "#9bc98a",
+      "desc": "照顧校園設備、環境與繳費相關事務，讓整座樂園每天都安全、乾淨。",
+      "details": ["校園設備與環境維護", "各項費用繳交", "場地借用"],
+      "a11y": "平面入口，無階梯。"
+    },
+    {
+      "id": "counsel",
+      "type": "kiosk",
+      "icon": "💗",
+      "name": "愛心小屋",
+      "campus": "輔導室（示意）",
+      "pos": [-7, -3],
+      "node": "gd",
+      "color": "#f2a7b8",
+      "desc": "孩子剛上小學難免緊張，輔導老師會陪伴孩子適應新環境，也提供家長親職諮詢與特殊教育服務。",
+      "details": ["新生適應輔導", "親職教育諮詢", "特殊教育需求服務"],
+      "a11y": "平面入口，無階梯。"
+    },
+    {
+      "id": "health",
+      "type": "kiosk",
+      "icon": "⛑️",
+      "name": "急救小站",
+      "campus": "健康中心（示意）",
+      "pos": [7, -3],
+      "node": "hc",
+      "color": "#ffffff",
+      "desc": "孩子身體不舒服、受傷時的照護站，也負責新生健康檢查與預防接種紀錄。",
+      "details": ["傷病照護", "新生健康檢查", "AED 設置點"],
+      "a11y": "平面入口，無階梯；設有 AED。"
+    },
+    {
+      "id": "library",
+      "type": "carousel",
+      "icon": "📚",
+      "name": "故事旋轉木馬",
+      "campus": "圖書館・閱讀活動",
+      "pos": [-16, 3],
+      "node": "car",
+      "color": "#d98bd0",
+      "desc": "每一匹木馬都載著一本故事書！學校重視閱讀活動，孩子可以在這裡借書、聽故事，愛上閱讀。",
+      "details": ["借閱繪本與兒童讀物", "晨讀與閱讀活動", "閱讀心得分享"],
+      "a11y": "平面入口，設有無障礙座位區。"
+    },
+    {
+      "id": "clubs",
+      "type": "tent",
+      "icon": "🎪",
+      "name": "社團馬戲帳篷",
+      "campus": "社團活動",
+      "pos": [16, 3],
+      "node": "tent",
+      "color": "#e8775a",
+      "desc": "各種精彩社團在帳篷裡輪番上演！孩子可以探索音樂、運動、藝術等多元興趣。",
+      "details": ["多元社團探索", "成果發表與表演", "詳見招生專區「復興社團活動」"],
+      "links": [
+        { "label": "🐉 福星龍社團浮空島", "url": "https://buddhaists.github.io/fuxing-clubs-island/" },
+        { "label": "招生專區：復興社團活動", "url": "https://sites.google.com/fsps.ptc.edu.tw/fspsfreshman-admission/復興社團活動" }
+      ],
+      "a11y": "平面入口。"
+    },
+    {
+      "id": "feature",
+      "type": "train",
+      "icon": "🚂",
+      "name": "特色教學小火車",
+      "campus": "特色教學・學校介紹",
+      "pos": [-13, 15],
+      "node": "train",
+      "color": "#5aa6a0",
+      "desc": "搭上小火車，一站一站認識學校的特色課程與教學亮點。",
+      "details": ["學校特色教學介紹", "學校介紹影片", "詳見「116 復興教學與特色介紹」"],
+      "links": [{ "label": "招生專區：教學與特色介紹", "url": "https://sites.google.com/fsps.ptc.edu.tw/fspsfreshman-admission/116復興教學與特色介紹" }],
+      "a11y": "月台為平面。"
+    },
+    {
+      "id": "classroom",
+      "type": "classroom",
+      "icon": "🧸",
+      "name": "積木小屋村",
+      "campus": "一年級教室（示意）",
+      "pos": [-18, -14],
+      "node": "cls",
+      "color": "#f2c46d",
+      "desc": "一年級的教室就在這片彩色積木小屋裡！開學第一天請依編班結果到班級教室找導師報到。",
+      "details": ["一年級各班教室", "開學依編班名單找教室", "家長接送等候區"],
+      "a11y": "小屋村位於矮平台，正面為階梯；左側有無障礙坡道。"
+    },
+    {
+      "id": "ferris",
+      "type": "ferris",
+      "icon": "🎡",
+      "name": "鳥瞰摩天輪",
+      "campus": "全區鳥瞰",
+      "pos": [18, -14],
+      "node": "ferris",
+      "color": "#7fb6e6",
+      "desc": "搭上摩天輪，從高處一次看清整座校園的配置！",
+      "details": ["點「搭乘摩天輪」進入鳥瞰模式", "最高點會顯示所有設施名稱", "想看真實校園？請開啟「復興 3D 校園導覽」"],
+      "links": [{ "label": "🏫 復興 3D 校園導覽", "url": "https://buddhaists.github.io/fuxing-3d-campus/" }],
+      "actions": ["ride"],
+      "a11y": "鳥瞰模式為畫面功能，不需實際移動。"
+    },
+    {
+      "id": "magazine",
+      "type": "newsstand",
+      "icon": "📰",
+      "name": "文藝復興報攤",
+      "campus": "校刊《文藝復興》",
+      "pos": [8, 19],
+      "node": "news",
+      "color": "#5aa6a0",
+      "desc": "想更認識學校？來報攤翻翻校刊《文藝復興》，看看孩子們的作品與校園大小事。",
+      "details": ["校刊《文藝復興》", "實境導覽：3D 與 Google 360"],
+      "links": [
+        { "label": "🏝️ 復興文藝復興（校刊）浮空島", "url": "https://buddhaists.github.io/fushing-island/" },
+        { "label": "招生專區：文藝復興（校刊）", "url": "https://sites.google.com/fsps.ptc.edu.tw/fspsfreshman-admission/文藝復興校刊" },
+        { "label": "招生專區：復興實境導覽", "url": "https://sites.google.com/fsps.ptc.edu.tw/fspsfreshman-admission/復興實境導覽" }
+      ],
+      "a11y": "平面。"
+    },
+    {
+      "id": "assembly",
+      "type": "fountain",
+      "icon": "⛲",
+      "name": "許願噴泉廣場",
+      "campus": "中央廣場・緊急集合點",
+      "pos": [0, 4],
+      "node": "p",
+      "color": "#7fb6e6",
+      "desc": "全園的中心點，也是地震、火災等緊急狀況時的集合點。請記得：迷路時就回到噴泉找老師！",
+      "details": ["緊急避難集合點", "迷路集合點", "所有主要步道皆由此出發"],
+      "a11y": "全區平面，周邊步道皆可通行輪椅。"
+    }
+  ],
+
+  "paths": {
+    "note": "節點座標 [x, z, 高度]。stairs:true 的路段為階梯，無障礙模式會避開。ramp:true 為無障礙坡道。",
+    "nodes": {
+      "gate":   { "p": [0, 20],   "label": "校門口" },
+      "s":      { "p": [0, 13] },
+      "news":   { "p": [5, 17],   "label": "文藝復興報攤" },
+      "sw":     { "p": [-8, 13] },
+      "train":  { "p": [-9, 15],  "label": "特色教學小火車" },
+      "p":      { "p": [0, 4],    "label": "中央噴泉廣場" },
+      "xw":     { "p": [-8, 4] },
+      "car":    { "p": [-12, 3],  "label": "故事旋轉木馬" },
+      "xe":     { "p": [8, 4] },
+      "tent":   { "p": [12, 3],   "label": "社團馬戲帳篷" },
+      "pn":     { "p": [0, -4] },
+      "gd":     { "p": [-4.5, -3],"label": "愛心小屋" },
+      "hc":     { "p": [4.5, -3], "label": "急救小站" },
+      "cfoot":  { "p": [0, -7],   "label": "城堡前階梯" },
+      "castle": { "p": [0, -10, 0.8], "label": "夢想城堡（教務處）" },
+      "rampB":  { "p": [7, -6],   "label": "城堡無障礙坡道" },
+      "rampT":  { "p": [5, -11, 0.8] },
+      "nw":     { "p": [-10, -5] },
+      "sa":     { "p": [-11, -7], "label": "氣球遊客服務站" },
+      "lfoot":  { "p": [-18, -8], "label": "小屋村前階梯" },
+      "cls":    { "p": [-18, -10.5, 0.6], "label": "積木小屋村" },
+      "lrampB": { "p": [-23, -7], "label": "小屋村無障礙坡道" },
+      "lrampT": { "p": [-23.5, -11, 0.6] },
+      "ne":     { "p": [10, -5] },
+      "ga":     { "p": [11, -7],  "label": "工具熊維修站" },
+      "ferris": { "p": [15, -9],  "label": "鳥瞰摩天輪" }
+    },
+    "edges": [
+      ["gate", "s"], ["s", "news"], ["s", "sw"], ["sw", "train"], ["s", "p"],
+      ["p", "xw"], ["xw", "car"], ["p", "xe"], ["xe", "tent"],
+      ["p", "pn"], ["pn", "gd"], ["pn", "hc"],
+      ["pn", "cfoot"], ["cfoot", "castle", { "stairs": true }],
+      ["hc", "rampB"], ["rampB", "rampT", { "ramp": true }], ["rampT", "castle"],
+      ["pn", "nw"], ["xw", "nw"], ["nw", "sa"],
+      ["nw", "lfoot"], ["lfoot", "cls", { "stairs": true }],
+      ["lfoot", "lrampB"], ["lrampB", "lrampT", { "ramp": true }], ["lrampT", "cls"],
+      ["pn", "ne"], ["xe", "ne"], ["ne", "ga"], ["ne", "ferris"]
+    ]
+  },
+
+  "quiz": {
+    "title": "入園門票：親子適性小問答",
+    "intro": "請爸爸媽媽陪孩子一起回答 4 個小問題，我們會推薦最適合先去逛的設施！",
+    "questions": [
+      {
+        "q": "放假的時候，孩子最喜歡做什麼？",
+        "options": [
+          { "text": "📖 看繪本、聽故事", "score": { "library": 2 } },
+          { "text": "⚽ 跑跑跳跳、玩球", "score": { "clubs": 2 } },
+          { "text": "🔬 動手做實驗、拼積木", "score": { "feature": 2 } },
+          { "text": "🎨 畫畫、唱歌跳舞", "score": { "clubs": 1, "magazine": 1 } }
+        ]
+      },
+      {
+        "q": "第一次走進新教室，孩子可能會…",
+        "options": [
+          { "text": "😊 很興奮，想馬上認識同學", "score": { "classroom": 2 } },
+          { "text": "😳 有點害羞，需要時間適應", "score": { "counsel": 2 } },
+          { "text": "🤔 先到處看看、觀察環境", "score": { "ferris": 2 } }
+        ]
+      },
+      {
+        "q": "爸爸媽媽現在最想先知道什麼？",
+        "options": [
+          { "text": "📝 報到要帶什麼、去哪裡辦", "score": { "academic": 3 } },
+          { "text": "🏫 孩子的教室在哪裡", "score": { "classroom": 2 } },
+          { "text": "✨ 學校有哪些特色課程", "score": { "feature": 2 } },
+          { "text": "🗺️ 先看看整個校園長什麼樣子", "score": { "ferris": 2 } }
+        ]
+      },
+      {
+        "q": "孩子最期待小學的哪一件事？",
+        "options": [
+          { "text": "📚 圖書館裡有好多書", "score": { "library": 2 } },
+          { "text": "🎪 參加有趣的社團", "score": { "clubs": 2 } },
+          { "text": "🚂 學新東西、上特別的課", "score": { "feature": 2 } },
+          { "text": "👫 交到新朋友", "score": { "classroom": 1, "counsel": 1 } }
+        ]
+      }
+    ],
+    "resultTitle": "你的專屬門票",
+    "resultText": "推薦你先去："
+  },
+
+  "tips": [
+    "迷路了？回到中央噴泉廣場，就能找到老師。",
+    "開學第一天請提早 10 分鐘到校，依編班名單找教室。",
+    "輪椅、娃娃車可開啟「無障礙路線」避開所有階梯。"
+  ]
+}

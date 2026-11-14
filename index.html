@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#f6e3c6" />
+    <meta name="description" content="屏東縣復興國小新生報到與校園導覽：3D 夢想主題遊樂園互動網站，含報到方式、處室導航與無障礙動線。" />
+    <title>復興夢想主題遊樂園｜新生報到與校園導覽</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎡</text></svg>" />
+  </head>
+  <body>
+    <noscript><p class="noscript">此網站需要 JavaScript。請改用 <a href="text.html">純文字導覽</a>。</p></noscript>
+    <canvas id="scene" aria-label="3D 校園遊樂園地圖，可用工具列或設施名稱按鈕操作"></canvas>
+    <div id="labels" aria-label="設施列表"></div>
+
+    <header class="topbar">
+      <h1 id="title"></h1>
+      <a id="textLink" class="text-link" href="text.html"></a>
+    </header>
+
+    <nav id="toolbar" class="toolbar" aria-label="主要功能"></nav>
+    <p id="hint" class="hint"></p>
+    <p id="legend" class="legend" hidden></p>
+
+    <aside id="panel" class="panel" role="dialog" aria-modal="false" hidden>
+      <div id="panelBody"></div>
+    </aside>
+
+    <div id="modal" class="modal" role="dialog" aria-modal="true" hidden>
+      <div class="modal-card" id="modalBody"></div>
+    </div>
+
+    <div id="rideOverlay" class="ride-overlay" hidden>
+      <p id="rideHint"></p>
+      <button type="button" id="rideExit" class="btn primary"></button>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <div id="loading" class="loading"><span>🎡</span><p>樂園準備中…</p></div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
