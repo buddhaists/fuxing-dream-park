@@ -164,6 +164,7 @@ function carousel(f) {
     horses.push(body);
   }
   g.add(spin);
+  g.userData.horses = horses;
   g.userData.update = (t, dt, motion) => {
     if (!motion) return;
     spin.rotation.y += dt * 0.5;
@@ -249,7 +250,7 @@ function train(f) {
       c.add(box(0.5, 0.6, 0.75, P.red, -0.3, 1.15, 0));
       c.add(cyl(0.14, 0.18, 0.6, 6, P.dark, 0.35, 1.2, 0));
     } else {
-      c.add(box(0.9, 0.3, 0.6, P.yellow, 0, 1.0, 0));
+      c.add(box(1.15, 0.1, 0.8, P.yellow, 0, 0.92, 0)); // 車廂邊框（孩子坐在上面）
     }
     g.add(c);
     cars.push(c);
@@ -257,6 +258,7 @@ function train(f) {
   mk(P.teal, true);
   mk(P.sky, false);
   mk(P.coral, false);
+  g.userData.cars = cars;
   let ang = 0;
   g.userData.update = (t, dt, motion) => {
     if (motion) ang += dt * 0.45;

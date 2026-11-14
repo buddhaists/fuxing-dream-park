@@ -2,6 +2,7 @@
 import * as THREE from 'three';
 import { PALETTE as P, box, cyl, cone, ball, mat, rng } from './kit.js';
 import { builders } from './facilities.js';
+import { addKids } from './people.js';
 
 export const BASE_R = 34;
 
@@ -159,6 +160,8 @@ export function buildWorld(scene, data, graph, quality) {
     const build = builders[f.type];
     if (!build) continue;
     const obj = build(f);
+    const kidsUpdate = addKids(f, obj); // 正在遊玩的孩子
+    updaters.push((t, dt, motion) => kidsUpdate(t, motion));
     obj.position.set(f.pos[0], 0, f.pos[1]);
     obj.userData.facilityId = f.id;
     obj.traverse((o) => (o.userData.facilityId = f.id));
