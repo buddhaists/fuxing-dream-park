@@ -11,6 +11,7 @@ import { createPostFX } from './scene/postfx.js';
 import { allMaterials } from './scene/kit.js';
 import { createLabels } from './ui/labels.js';
 import { createUI } from './ui/ui.js';
+import { createAudio } from './core/audio.js';
 
 if (!hasWebGL()) {
   location.replace('text.html?nowebgl=1');
@@ -18,6 +19,7 @@ if (!hasWebGL()) {
 }
 
 const settings = loadSettings();
+const sound = createAudio(settings); // 不支援 Web Audio 時為 null，其餘功能照常
 const graph = buildGraph(data.paths);
 const byId = Object.fromEntries(data.facilities.map((f) => [f.id, f]));
 let tier = settings.quality === 'auto' ? detectTier() : settings.quality;
@@ -81,6 +83,8 @@ function focus(id) {
   rig.cancelFollow();
   selected = id;
   labels.setActive(id);
+  sound?.play('click');
+  if (f.type === 'train') sound?.play('whistle');
   rig.focusFacility(f);
   view.openFacility(id);
 }
@@ -92,12 +96,17 @@ function navigate(from, to, accessible, follow) {
   if (!route) return null;
   const curve = routes.show(route, accessible);
   labels.setActive(to);
+  sound?.play('nav');
+  const arrived = () => sound?.play('arrive');
   if (route.ids.length < 2) {
-    rig.focusFacility(fb);
+    rig.focusFacility(fb).then(arrived);
   } else if (follow && !settings.reduceMotion) {
     const start = route.points[0];
     rig.flyTo([start.x, start.y + 13, start.z + 14], [start.x, start.y, start.z], 1.2).then(() =>
-      rig.followCurve(curve, route.length, () => rig.focusFacility(fb)),
+      rig.followCurve(curve, route.length, () => {
+        arrived();
+        rig.focusFacility(fb);
+      }),
     );
   } else {
     // 不跟隨：拉到可以看見整條路線的高度
@@ -110,7 +119,7 @@ function navigate(from, to, accessible, follow) {
     const wide = window.innerWidth > 760;
     const ox = wide ? 6 + span * 0.35 : 0;
     const oz = wide ? 0 : 6 + span * 0.3;
-    rig.flyTo([cx + ox, 20 + span * 1.2, cz + oz + 18 + span], [cx + ox, 0, cz + oz]);
+    rig.flyTo([cx + ox, 20 + span * 1.2, cz + oz + 18 + span], [cx + ox, 0, cz + oz]).then(arrived);
   }
   return { route, steps: describeRoute(graph, route) };
 }
@@ -136,7 +145,10 @@ function ride() {
     view.setToolActive('ride', true);
     rig.startRide(
       world.facilityObjs.ferris,
-      (top) => document.body.classList.toggle('topview', top),
+      (top) => {
+        document.body.classList.toggle('topview', top);
+        if (top) sound?.play('top');
+      },
       endRide,
     );
   });
@@ -165,11 +177,50 @@ function home() {
   rig.flyTo(VIEWS.overview.pos, VIEWS.overview.target);
 }
 
+// ── 音樂與音效 ──
+const soundBtn = document.getElementById('soundBtn');
+function applySound() {
+  saveSettings(settings);
+  soundBtn.textContent = settings.sound ? ui.soundOn : ui.soundOff;
+  soundBtn.classList.toggle('off', !settings.sound);
+  soundBtn.setAttribute('aria-pressed', String(settings.sound));
+  if (settings.sound) sound?.unlock();
+  sound?.applyState();
+}
+soundBtn.setAttribute('aria-label', ui.soundLabel);
+soundBtn.title = ui.soundLabel;
+if (!sound) soundBtn.hidden = true;
+soundBtn.addEventListener('click', () => {
+  settings.sound = !settings.sound;
+  applySound();
+});
+applySound();
+
+// 環境音：依鏡頭與設施的距離決定音量
+const ambientSpots = data.facilities
+  .filter((f) => ['carousel', 'train', 'fountain'].includes(f.type))
+  .map((f) => ({ type: f.type, p: new THREE.Vector3(f.pos[0], 0, f.pos[1]) }));
+const ambLevels = {};
+function updateAmbient() {
+  if (!sound) return;
+  // 鏡頭「看向」設施附近且拉近時才聽得到（手機鏡頭較遠也適用）
+  const t = rig.controls.target;
+  const c = rig.focusCenter || t;
+  const zoom = THREE.MathUtils.clamp((72 - camera.position.distanceTo(t)) / 24, 0, 1);
+  for (const s of ambientSpots) {
+    const td = Math.hypot(c.x - s.p.x, c.z - s.p.z);
+    ambLevels[s.type] = THREE.MathUtils.clamp((12 - td) / 6, 0, 1) * zoom;
+  }
+  sound.setAmbient(ambLevels);
+}
+
 const view = createUI({
   data,
   ui,
   settings,
+  sound,
   actions: {
+    applySound,
     home,
     focus,
     navigate,
@@ -203,6 +254,7 @@ let t = 0;
 let fpsAcc = 0;
 let fpsFrames = 0;
 let fpsChecks = 0;
+let frameCount = 0;
 function frame() {
   const dt = Math.min(clock.getDelta(), 0.1);
   t += dt;
@@ -213,6 +265,7 @@ function frame() {
   if (usePost) post.render();
   else renderer.render(scene, camera);
   labels.update(camera, window.innerWidth, window.innerHeight);
+  if ((frameCount++ & 7) === 0) updateAmbient(); // 每 8 幀更新一次即可
 
   // 前幾秒偵測幀率，太低就自動切換省電畫質
   if (settings.quality === 'auto' && tier === 'high' && fpsChecks < 4 && t > 2) {
@@ -240,6 +293,11 @@ setTimeout(() => loadingEl.remove(), 800);
 requestAnimationFrame(frame);
 
 // 開場鏡頭：從高空推近，再開啟門票問答
+// 瀏覽器擋下自動播放時，提示點一下畫面即可開始
+setTimeout(() => {
+  if (sound && settings.sound && settings.autoplay && settings.music && !sound.running) view.toast(ui.soundHint, 4500);
+}, 1200);
+
 rig.flyTo(VIEWS.overview.pos, VIEWS.overview.target, settings.reduceMotion ? 0.3 : 3.2).then(() => {
   if (!settings.quizSeen) {
     settings.quizSeen = true;
@@ -249,4 +307,4 @@ rig.flyTo(VIEWS.overview.pos, VIEWS.overview.target, settings.reduceMotion ? 0.3
 });
 
 // 供除錯使用
-window.__park = { rig, camera, world, scene };
+window.__park = { rig, camera, world, scene, sound, ambLevels };

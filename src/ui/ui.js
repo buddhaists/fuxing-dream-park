@@ -4,7 +4,7 @@
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 const $ = (sel) => document.querySelector(sel);
 
-export function createUI({ data, ui, actions, settings }) {
+export function createUI({ data, ui, actions, settings, sound = null }) {
   const panel = $('#panel');
   const panelBody = $('#panelBody');
   const modal = $('#modal');
@@ -45,6 +45,7 @@ export function createUI({ data, ui, actions, settings }) {
     panelBody.innerHTML = html;
     panel.className = `panel ${cls}`;
     panel.hidden = false;
+    sound?.play('panel');
     panel.querySelector('.panel-close')?.focus();
   }
   function closePanel() {
@@ -191,7 +192,25 @@ export function createUI({ data, ui, actions, settings }) {
       <label class="check"><input type="checkbox" id="setTilt" ${settings.tiltShift ? 'checked' : ''}> ${esc(ui.setTiltShift)}</label>
       <label class="check"><input type="checkbox" id="setMotion" ${settings.reduceMotion ? 'checked' : ''}> ${esc(ui.setMotion)}</label>
       <label class="check"><input type="checkbox" id="setLabels" ${settings.labels ? 'checked' : ''}> ${esc(ui.setLabels)}</label>
-      <p><a href="text.html">📄 ${esc(ui.btnText)}</a></p>`);
+      <h3>🎵 ${esc(ui.setSoundTitle)}</h3>
+      <label class="check"><input type="checkbox" id="setSound" ${settings.sound ? 'checked' : ''}> ${esc(ui.soundLabel)}</label>
+      <label class="check"><input type="checkbox" id="setMusic" ${settings.music ? 'checked' : ''}> ${esc(ui.setMusic)}</label>
+      <label class="check"><input type="checkbox" id="setSfx" ${settings.sfx ? 'checked' : ''}> ${esc(ui.setSfx)}</label>
+      <label class="check"><input type="checkbox" id="setAmbient" ${settings.ambient ? 'checked' : ''}> ${esc(ui.setAmbient)}</label>
+      <label class="check"><input type="checkbox" id="setAutoplay" ${settings.autoplay ? 'checked' : ''}> ${esc(ui.setAutoplay)}</label>
+      <label class="range">${esc(ui.setVolume)} <input type="range" id="setVolume" min="0" max="100" step="5" value="${settings.volume}"><span id="volOut">${settings.volume}%</span></label>
+      <p><a href="text.html">${esc(ui.btnText)}</a></p>`);
+    for (const [id, key] of [['setSound', 'sound'], ['setMusic', 'music'], ['setSfx', 'sfx'], ['setAmbient', 'ambient'], ['setAutoplay', 'autoplay']]) {
+      $('#' + id).addEventListener('change', (e) => {
+        settings[key] = e.target.checked;
+        actions.applySound();
+      });
+    }
+    $('#setVolume').addEventListener('input', (e) => {
+      settings.volume = +e.target.value;
+      $('#volOut').textContent = `${settings.volume}%`;
+      actions.applySound();
+    });
     panelBody.querySelectorAll('input[name=q]').forEach((r) =>
       r.addEventListener('change', () => {
         settings.quality = r.value;
@@ -229,6 +248,7 @@ export function createUI({ data, ui, actions, settings }) {
       } else {
         const best = Object.entries(score).sort((a, b) => b[1] - a[1])[0]?.[0] || 'academic';
         const f = byId[best];
+        sound?.play('stamp');
         modalBody.innerHTML = `<div class="ticket" style="--accent:${esc(f.color)}">
             <div class="ticket-l"><small>ADMIT ONE</small><strong>${esc(data.school.parkName)}</strong><span>${esc(qz.resultTitle)}</span></div>
             <div class="ticket-r"><small>${esc(qz.resultText)}</small><span class="big-ico">${f.icon}</span><strong>${esc(f.name)}</strong><span>${esc(f.campus)}</span></div>
@@ -243,6 +263,7 @@ export function createUI({ data, ui, actions, settings }) {
     modalBody.onclick = (e) => {
       const o = e.target.closest('[data-o]');
       if (o) {
+        sound?.play('click');
         const opt = qz.questions[i].options[+o.dataset.o];
         for (const [k, v] of Object.entries(opt.score)) score[k] = (score[k] || 0) + v;
         i++;

@@ -8,6 +8,12 @@ const defaults = {
   labels: true,
   accessibleRoute: false,
   quizSeen: false,
+  sound: true, // 總開關（右上角喇叭）
+  music: true,
+  sfx: true,
+  ambient: true,
+  autoplay: true,
+  volume: 70,
 };
 
 export function loadSettings() {

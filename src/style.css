@@ -43,6 +43,11 @@ button { font: inherit; color: inherit; cursor: pointer; }
   display: flex; flex-direction: column; pointer-events: auto;
 }
 .topbar h1 small { font-size: 0.78rem; font-weight: 500; color: var(--muted); }
+.top-actions { display: flex; gap: 8px; align-items: center; }
+.sound-btn { border: 0; font-size: 1.05rem; line-height: 1; padding: 7px 11px; cursor: pointer; }
+.sound-btn.off { opacity: 0.75; }
+.range { display: flex; align-items: center; gap: 10px; margin: 8px 0; }
+.range input { flex: 1; accent-color: var(--accent); }
 .text-link {
   pointer-events: auto; white-space: nowrap; text-decoration: none; font-size: 0.85rem;
   background: var(--paper); padding: 8px 12px; border-radius: 999px; box-shadow: var(--shadow); color: var(--ink);

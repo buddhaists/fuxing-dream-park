@@ -38,7 +38,12 @@ export function createCameraRig(camera, dom) {
   let ride = null;
   let reduceMotion = false;
 
-  function flyTo(pos, target, duration = 1.6) {
+  // 目前聚焦的設施中心（鏡頭目標點會為了避開面板而偏移，環境音要用真正的設施位置）
+  let focusCenter = null;
+  controls.addEventListener('start', () => (focusCenter = null));
+
+  function flyTo(pos, target, duration = 1.6, center = null) {
+    focusCenter = center;
     return new Promise((resolve) => {
       if (reduceMotion) duration = Math.min(duration, 0.35);
       tween = {
@@ -64,7 +69,7 @@ export function createCameraRig(camera, dom) {
     const m = wide ? 1 : 1.5; // 直式手機視野窄，拉遠一些
     const ox = wide ? 5 * big : 0;
     const oz = wide ? 0 : 10 * big;
-    return flyTo([x + ox + 2, (14 * big + height) * m, z + oz + 21 * big * m], [x + ox, height * 0.6, z + oz]);
+    return flyTo([x + ox + 2, (14 * big + height) * m, z + oz + 21 * big * m], [x + ox, height * 0.6, z + oz], 1.6, { x, z });
   }
 
   function followCurve(curve, length, onDone) {
@@ -185,6 +190,9 @@ export function createCameraRig(camera, dom) {
     update,
     get mode() {
       return mode;
+    },
+    get focusCenter() {
+      return focusCenter;
     },
     cancelFollow() {
       if (mode === 'follow') {
